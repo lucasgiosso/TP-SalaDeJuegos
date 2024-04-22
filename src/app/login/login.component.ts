@@ -29,7 +29,7 @@ export class LoginComponent {
         showConfirmButton: false,
         timer: 1500
       });
-      this.router.navigate(['login']);
+      this.router.navigate(['home']);
     } catch (error: any) {
       if (error.code !== 'auth/invalid-email') {
         console.error('Error al iniciar sesión', error);
