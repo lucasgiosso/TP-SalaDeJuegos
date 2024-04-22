@@ -58,7 +58,6 @@ export class RegisterComponent {
         throw { code: 'auth/weak-password' };
       }
   
-      // Verificar si el usuario ya está registrado
       const userExists = await this.auth.checkIfUserExists(this.email);
   
       if (userExists) {
@@ -66,11 +65,16 @@ export class RegisterComponent {
           icon: 'error',
           title: 'Usuario existente',
           text: 'El correo electrónico ya está registrado. Inicia sesión en lugar de registrarte.',
+        }).then(() => {
+          this.email = '';
+          this.password = ''; 
+          this.repetirPassword = '';
+          this.nombre = '';
+          this.username = '';
         });
         return;
       }
   
-      // Intentar registrar al usuario
       const userCredential = await this.auth.register(this.email, this.password);
   
       Swal.fire({
@@ -99,6 +103,12 @@ export class RegisterComponent {
           icon: 'error',
           title: 'Usuario existente',
           text: 'El correo electrónico ya está registrado. Inicia sesión en lugar de registrarte.',
+        }).then(() => {
+          this.email = '';
+          this.password = ''; 
+          this.repetirPassword = '';
+          this.nombre = '';
+          this.username = '';
         });
       } else {
         console.error('Error en el registro:', error);
@@ -110,9 +120,6 @@ export class RegisterComponent {
       }
     }
   }
-  
-  
-  
   
   goToLogin(){
     this.router.navigate(['/login']);
