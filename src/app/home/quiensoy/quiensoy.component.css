@@ -1,0 +1,188 @@
+body,
+html {
+  height: 100%;
+  margin: 0;
+}
+
+*{
+    box-sizing: border-box;
+}
+
+body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-image: url(https://firebasestorage.googleapis.com/v0/b/tp-sala-de-juegos-diazgiossol.appspot.com/o/background.svg?alt=media&token=dc633112-e417-4d83-85cd-769218c72573);
+    background-repeat: no-repeat;
+    background-size: cover;
+    font-family: "Euclid Circular A", "Poppins";
+  }
+
+.card{
+    display: flex;
+    align-items: center;
+    width: 75vw;
+    max-width: 600px;
+    padding: 50px 30px 50px 20px;
+    background: #ffffff;
+    border-radius: 48px;
+    
+}
+
+.card img {
+    max-width: 280px;
+    width: 28vw;
+    height: 300px;
+    object-fit: cover;
+    border-radius: inherit;
+    box-shadow: 0 60px 40px rgb(0 0 0 / 8%);
+    float: left; 
+}
+
+.card h2 {
+    font-size: 26px;
+    text-align: center;
+    padding: 10px;
+  }
+
+.card h3 {
+font-size: 16px;
+font-weight: 400;
+color: rgb(0 0 0 / 90%);
+}
+
+.card p {
+font-size: 14px;
+font-weight: 400;
+color: rgb(0 0 0 / 70%);
+margin-bottom: 24px;
+}
+
+.card button {
+    border:0;
+    background: linear-gradient(90deg, #5448de, #5448de);
+    color: #f8f8f8;
+    font-family: inherit;
+    padding: 16px 26px;
+    font-size: 16px;
+    border-radius: 40px;
+}
+
+.button-container {
+    border: 0;
+    background-color: #313131ef;
+    color: #f8f8f8;
+    font-family: inherit;
+    padding: 16px 26px;
+    font-size: 16px;
+    border-radius: 40px;
+    font-family: "Euclid Circular A", "Poppins";
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+.card-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+
+@media (width <= 740px){
+    .card {
+        margin: 0 40px;
+        padding-left: 50px;
+        padding-right: 50px;
+        width: 100%;
+        text-align: center;
+        flex-direction: column;
+      }
+    
+    .card h2 {
+        margin-right: 0;
+        font-size: 26px;
+    }
+
+    .card img{
+        margin: -100px 0 30px 0;
+        width: 100%;
+        max-width: 1000px;
+    }
+}
+
+.navbar-custom {
+    position: fixed;
+    top: 0; 
+    right: 0; 
+    padding: 10px 20px;
+    z-index: 1000;
+    display: flex;
+    align-items: center; 
+  }
+
+  .navbar-custom a{
+    color: #f3f3f3;
+    text-decoration: none;
+    cursor: pointer;
+    display: flex; 
+    align-items: center;
+  }
+
+  .user-photo{
+    width: 2rem;
+    min-width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    margin-right: 0.5rem;
+  }
+
+  .logout-button{
+    margin-left: auto;
+    cursor: pointer;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    background-color: transparent;
+    border: none;
+    color: #f3f3f3;
+    display: flex; 
+    align-items: center;
+    position: relative;
+    font-family: "Euclid Circular A", "Poppins";
+
+    i.fa {
+        font-size: 1.5rem; 
+        margin-right: 0.5rem; 
+
+      }
+  }
+
+  .dropdown-content {
+    position: absolute;
+    top: calc(65% + 10px);
+    right: 0;
+    text-align: center;
+    border-radius: 0.313rem; 
+    padding: 0.2rem; 
+    min-width: 10rem; 
+  
+    button {
+      width: 100%;
+      border: none;
+      background: transparent;
+      color: #f3f3f3;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      padding: 0.5rem 0;
+      transition: background-color 0.3s;
+    }
+
+  }
+
+  .logout-button:hover + .dropdown-content {
+    display: block;
+  }

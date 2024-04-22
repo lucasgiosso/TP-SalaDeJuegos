@@ -1,0 +1,50 @@
+  <body class="vh-100 gradient-custom">
+    <div class="navbar-custom">
+      <!-- <a (click)="toggleDropdown()" *ngIf="currentUser$ | async as user">
+        <img *ngIf="user.photoURL" src="{{user.photoURL}}" alt="Foto de perfil de usuario" class="user-photo">
+        <img *ngIf="!user.photoURL" src="https://firebasestorage.googleapis.com/v0/b/saladejuegos-f63ca.appspot.com/o/CV.jpeg?alt=media&token=9e535adc-76b1-4019-a2a9-aa80bcc8e7b9s" class="user-photo">
+        {{ user.displayName ? user.displayName : user.email }}
+      </a> -->
+      <div class="dropdown-content" *ngIf="isDropdownOpen">
+        <button class="logout-button" *ngIf="showLogoutButton" (click)="logout()">
+          <i class="fa solid fa-power-off"></i> Cerrar Sesión
+        </button>
+      </div>
+    </div>
+
+    <div class="sidenav" [ngClass]="collapsed ? 'sidenav-collapsed': '' ">
+
+      <div class="logo-container">
+        <button class="logo" (click)="toggleCollapse()">SJ</button>
+        <div class="logo-text" *ngIf="collapsed">Sala de Juegos</div>
+        <button class="btn-close" *ngIf="collapsed" (click)="closeSidenav()">
+          <i class="fa-solid fa-xmark fa-xl" style="color: #ffffff;"></i>
+        </button>
+      </div>
+
+      <ul class="sidenav-nav">
+        <li class="sidenav-nav-item" *ngFor="let data of navData">
+          <a class="sidenav-nav-link" [routerLink]="[data.routeLink]" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="handleNavigation(data.routeLink)">
+            <i class="sidenav-link-icon" [class]="data.icon"></i>
+            <span class="sidenav-link-text" *ngIf="collapsed">{{ data.label }}</span>
+          </a>
+        </li>
+      </ul>
+      <!-- <app-chat *ngIf="currentUser$ | async as user"></app-chat> -->
+    </div>
+
+      <div class="container py-5 h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+          <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+            <div class="card bg-dark text-white" style="border-radius: 1rem;">
+              <div class="card-body p-5 text-center">
+                <!-- <div class="mb-md-5 mt-md-4 pb-5"> -->
+                  <h2 class="fw-bold mb-2 text-uppercase">Bienvenido a la página de inicio</h2>
+                <!-- </div> -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  </body>
+

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <div class="navbar-custom">
+        <!-- <a (click)="toggleDropdown()" *ngIf="currentUser$ | async as user" >
+          <img *ngIf="user.photoURL" src="{{user.photoURL}}" alt="Foto de perfil de usuario" class="user-photo">
+          <img *ngIf="!user.photoURL" src="https://firebasestorage.googleapis.com/v0/b/saladejuegos-f63ca.appspot.com/o/CV.jpeg?alt=media&token=9e535adc-76b1-4019-a2a9-aa80bcc8e7b9"  class="user-photo">
+          {{ user.displayName?user.displayName : user.email }} 
+        </a> -->
+        <div class="dropdown-content" *ngIf="isDropdownOpen">
+          <button class="logout-button" *ngIf="showLogoutButton" (click)="logout()">
+            <i class="fa solid fa-power-off"></i> Cerrar Sesión
+          </button>
+        </div>
+      </div>
+
+    <div class="card-container">
+    <div class="card">
+        <img src="https://firebasestorage.googleapis.com/v0/b/saladejuegos-f63ca.appspot.com/o/CV.jpeg?alt=media&token=9e535adc-76b1-4019-a2a9-aa80bcc8e7b9"/>
+        <div>
+            <h2>Diaz Giosso, Lucas</h2>
+            <h3>Word Scramble</h3>
+            <p>
+                Es un juego en el que las letras que 
+                pueden formar una palabra con sentido 
+                se barajan o revuelven al azar, y los 
+                jugadores tienen que averiguar la palabra 
+                correcta utilizando esas letras aleatorias.
+            </p>
+            <button>Ir a Word Scramble</button>
+        </div>
+    </div>
+    <input type="button" [value]="btnVolver" [class]="['button-container']" (click)="onClick($event)"/>
+    
+</div>
+</body>
+</html>
+
