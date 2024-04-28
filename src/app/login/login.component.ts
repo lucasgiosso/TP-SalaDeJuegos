@@ -18,6 +18,8 @@ export class LoginComponent {
   constructor(private router: Router, private auth: AuthService) { }
 
   credenciales = { email: '', password: '' }
+  defaultEmail = 'admin@test.com';
+  defaultPassword = '123456';
 
   async login() {
     // console.log('credenciales ->', this.credenciales);
@@ -92,6 +94,10 @@ export class LoginComponent {
     }
   }
 
+  loginLoad() {
+    this.credenciales.email = 'admin@test.com';
+    this.credenciales.password = '123456';
+  }
   
   
   register() {

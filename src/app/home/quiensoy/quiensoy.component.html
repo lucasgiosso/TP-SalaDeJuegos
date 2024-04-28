@@ -8,13 +8,19 @@
 <body>
 
     <div class="navbar-custom">
-        <!-- <a (click)="toggleDropdown()" *ngIf="currentUser$ | async as user" >
-          <img *ngIf="user.photoURL" src="{{user.photoURL}}" alt="Foto de perfil de usuario" class="user-photo">
-          <img *ngIf="!user.photoURL" src="https://firebasestorage.googleapis.com/v0/b/saladejuegos-f63ca.appspot.com/o/CV.jpeg?alt=media&token=9e535adc-76b1-4019-a2a9-aa80bcc8e7b9"  class="user-photo">
-          {{ user.displayName?user.displayName : user.email }} 
-        </a> -->
+      <a (click)="toggleDropdown()">
+        <span *ngIf="currentUser$ | async as user">
+          <span *ngIf="user.photoURL">
+            <img [src]="user.photoURL" alt="Foto de perfil de usuario" class="user-photo">
+          </span>
+          <span *ngIf="!user.photoURL">
+            <i class="fas fa-user-circle"></i>&nbsp;&nbsp;
+          </span>
+          {{ user.displayName ? user.displayName : user.email }}
+        </span>
+      </a>
         <div class="dropdown-content" *ngIf="isDropdownOpen">
-          <button class="logout-button" *ngIf="showLogoutButton" (click)="logout()">
+          <button class="logout-button" (click)="logout()">
             <i class="fa solid fa-power-off"></i> Cerrar Sesión
           </button>
         </div>

@@ -22,7 +22,12 @@
   
                 <p class="small mb-5 pb-lg-2"><a class="text-white-50" (click)="forgotPassword()">Olvidó su contraseña?</a></p>
                 
-                <button (click)="login()" data-mdb-button-init data-mdb-ripple-init class="btn btn-outline-light btn-lg px-5" type="submit">Ingresar</button>
+                <div class="mb-3">
+                  <button (click)="login()" data-mdb-button-init data-mdb-ripple-init class="btn btn-outline-light btn-lg px-5 mb-3" type="submit">Ingresar</button>
+                </div>
+                <div class="mb-3">
+                  <button (click)="loginLoad()" data-mdb-button-init data-mdb-ripple-init class="btn btn-outline-light btn-lg px-5" type="submit">Autocompletar</button>
+                </div>
   
               </div>
   

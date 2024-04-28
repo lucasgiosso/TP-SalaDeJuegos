@@ -26,7 +26,7 @@ body {
     background-image: url(https://firebasestorage.googleapis.com/v0/b/tp-sala-de-juegos-diazgiossol.appspot.com/o/background.svg?alt=media&token=dc633112-e417-4d83-85cd-769218c72573);
     background-repeat: no-repeat;
     background-size: cover;
-    /* font-family: "Euclid Circular A", "Poppins"; */
+    font-family: "Euclid Circular A", "Poppins";
 }
 
 .logo-container {
@@ -220,7 +220,7 @@ body {
     display: flex;
     align-items: center;
     position: relative;
-    /* font-family: "Euclid Circular A", "Poppins"; */
+    font-family: "Euclid Circular A", "Poppins";
 
     i.fa {
         font-size: 1.5rem;
