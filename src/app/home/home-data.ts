@@ -11,29 +11,29 @@ export const navbarData = [
         label: 'Quien Soy'
     },
 
-    // {
-    //     routeLink: 'ahorcado',
-    //     icon: 'fab fa-nimblr', 
-    //     label: 'Ahorcado'
-    // },
+    {
+        routeLink: 'ahorcado',
+        icon: 'fab fa-nimblr', 
+        label: 'Ahorcado'
+    },
 
-    // {
-    //     routeLink: 'mayorOMenor',
-    //     icon: 'fa solid fa-code',
-    //     label: 'Mayor o Menor'
-    // },
+    {
+        routeLink: 'mayorOMenor',
+        icon: 'fa solid fa-code',
+        label: 'Mayor o Menor'
+    },
 
-    // {
-    //     routeLink: 'preguntados',
-    //     icon: 'fa solid fa-question',
-    //     label: 'Preguntados'
-    // },
+    {
+        routeLink: 'preguntados',
+        icon: 'fa solid fa-question',
+        label: 'Preguntados'
+    },
 
-    // {
-    //     routeLink: 'word-scramble',
-    //     icon: 'fa solid fa-spell-check',
-    //     label: 'Preguntados'
-    // },
+    {
+        routeLink: 'word-scramble',
+        icon: 'fa solid fa-spell-check',
+        label: 'Word Scramble'
+    },
 
     {
         routeLink: 'logout',
