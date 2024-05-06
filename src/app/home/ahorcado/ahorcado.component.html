@@ -1,0 +1,62 @@
+<body class="vh-100 gradient-custom">
+
+  <div class="navbar-custom">
+    <a (click)="toggleDropdown()">
+      <span *ngIf="currentUser$ | async as user">
+        <span *ngIf="user.photoURL">
+          <img [src]="user.photoURL" alt="Foto de perfil de usuario" class="user-photo">
+        </span>
+        <span *ngIf="!user.photoURL">
+          <i class="fas fa-user-circle"></i>&nbsp;&nbsp;
+        </span>
+        {{ user.displayName ? user.displayName : user.email }}
+      </span>
+    </a>
+    <div class="dropdown-content" *ngIf="isDropdownOpen">
+      <button class="logout-button" (click)="logout()">
+        <i class="fa solid fa-power-off"></i> Cerrar Sesión
+      </button>
+    </div>
+  </div>
+
+  <app-chat *ngIf="currentUser$ | async as user"></app-chat>
+  
+  
+  <div class="card-container">
+  
+    <div class="game-info text-center">
+      <h1>{{ title }}</h1>
+    </div>
+    
+    <div class="game-info text-center">
+      <img
+        src="assets/img/{{ intentos }}.png"
+        class="ahorcado-img"
+        alt="Perdiste!!! Estás Ahorcado!!!"
+        title="Perdiste!!! Estás Ahorcado!!!"
+      />
+      <h3>Intentos: <small>{{ intentos }} / 8 </small></h3>
+    </div>
+  
+    <div class="game-info text-center">
+      <h3>Puntaje: {{ puntaje }}</h3>
+    </div>
+    
+    <div class="game-info text-center">
+      <h1>{{ palabraOculta }}</h1>
+    </div>
+    
+    <div class="game-info text-center" *ngIf="!gano && !perdio">
+      <div class="keyboard">
+        <button
+          (click)="comprobar(letra)"
+          *ngFor="let letra of letras"
+          class="btn btn-primary">
+          {{ letra.toUpperCase() }}
+        </button>
+      </div>
+      <input type="button" [value]="btnVolver" [class]="['back-button']" (click)="onClick($event)" />
+    </div>
+  </div>
+  
+</body>

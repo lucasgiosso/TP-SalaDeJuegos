@@ -1,0 +1,138 @@
+.cardContainer{
+    width: 300px;
+    height: 500px;
+    position: fixed;
+    right: 0.5rem;
+    bottom: 0.5rem;
+}
+
+.card-header{
+    background-color: blueviolet;
+    color: white;
+    font-weight: 600;
+}
+
+.card-body{
+    padding: 0.5rem;
+    background-color: #F6F7EB;
+    /* background-color: rgb(214, 214, 214) */
+}
+
+.icon{
+    cursor: pointer;
+}
+
+.icon:active{
+    transform: scale(0.9);
+    
+}
+
+.contenedorMensajes{
+    max-height: 375px;
+    padding: 0.3rem;
+    overflow-y: auto;
+}
+
+.contenedorMensajes::-webkit-scrollbar{
+    display: none;
+}
+
+.chatIconContainer{
+    position: fixed;
+    right: 0.5rem;
+    bottom: 0.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 60px;
+    height: 60px;
+    cursor: pointer;
+    background-color: rgb(167,167,167);
+    border-radius: 100%;
+
+}
+
+.chatIcon{
+    width: 24px;
+    height: 24px;
+    font-size: 24px;
+}
+
+.closeIcon{
+    position: absolute;
+    right: 0.5rem;
+    top: 0rem;
+    cursor: pointer;
+}
+
+.hora{
+    font-size: 10px;
+}
+
+.msj {
+    border: 1px solid #ccc;
+    background-color: #f0f0f0; 
+    padding: 10px; 
+    border-radius: 10px; 
+    margin: 5px 0; 
+    display: inline-block; 
+    max-width: 70%;
+  }
+
+.enviado{
+    display: block;
+    float: right;
+    /* background-color: #3140c9;  */
+    background-color: #3F88C5;
+    color: #fff; 
+    min-width: 50.01%;
+    border-radius: 10px;
+    text-align: right;
+    font-size: 15px;
+}
+
+.recibido{
+    display: block;
+    float: left;
+    /* background-color: #2599f8;  */
+    background-color: #393E41;
+    color: white;
+    min-width: 50.01%;
+    border-radius: 10px;
+    text-align: left;
+    font-size: 15px;
+}
+
+.form-control{
+    font-size: 14px;
+}
+
+.nombre-usuario{
+    text-align: left;
+    font-size: 12px;
+  }
+  
+.msj{
+    word-wrap: break-word;
+    display: flex;
+    flex-direction: column;
+  }
+  
+.mensaje{
+    margin-bottom: 5px;
+  }
+  
+.hora{
+    align-self: flex-end;
+  }
+
+
+.chatNotification {
+    width: 10px;
+    height: 10px;
+    background-color: red;
+    border-radius: 50%;
+    position: absolute;
+    top: 0;
+    right: 0;
+  }

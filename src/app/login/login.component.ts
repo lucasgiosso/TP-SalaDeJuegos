@@ -49,51 +49,7 @@ export class LoginComponent {
     }
   }
 
-  async forgotPassword() {
-    const { value: email } = await Swal.fire({
-      title: 'Ingrese su correo electrónico',
-      input: 'email',
-      inputLabel: 'Correo electrónico',
-      inputPlaceholder: 'Ingrese su correo electrónico',
-      showCancelButton: true,
-      confirmButtonText: 'Enviar',
-      cancelButtonText: 'Cancelar',
-      focusConfirm: false,
-      inputValidator: (value) => {
-        if (!value) {
-          return 'Debe ingresar su correo electrónico';
-        }
-        return null;
-      }
-    });
   
-    if (email) {
-      try {
-        await this.auth.sendPasswordResetEmail(email);
-        Swal.fire({
-          icon: 'success',
-          title: 'Correo electrónico enviado',
-          text: 'Se ha enviado un correo electrónico con instrucciones para restablecer su contraseña.',
-        });
-      } catch (error: any) {
-        console.error('Error al enviar correo electrónico:', error);
-        if (error.message === 'El correo electrónico no está asociado a ninguna cuenta') {
-          Swal.fire({
-            icon: 'error',
-            title: 'Error',
-            text: 'El correo electrónico no está asociado a ninguna cuenta. Por favor, verifique su correo electrónico e inténtelo de nuevo.',
-          });
-        } else {
-          Swal.fire({
-            icon: 'error',
-            title: 'Error',
-            text: 'Hubo un error al enviar el correo electrónico. Por favor, inténtelo de nuevo más tarde.',
-          });
-        }
-      }
-    }
-  }
-
   loginLoad() {
     this.credenciales.email = 'admin@test.com';
     this.credenciales.password = '123456';

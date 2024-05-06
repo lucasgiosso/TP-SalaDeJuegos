@@ -18,7 +18,7 @@ export const navbarData = [
     },
 
     {
-        routeLink: 'mayorOMenor',
+        routeLink: 'mayoromenor',
         icon: 'fa solid fa-code',
         label: 'Mayor o Menor'
     },
@@ -35,9 +35,9 @@ export const navbarData = [
         label: 'Word Scramble'
     },
 
-    {
-        routeLink: 'logout',
-        icon: 'fa solid fa-power-off',
-        label: 'Cerrar sesión'
-    }
+    // {
+    //     routeLink: 'logout',
+    //     icon: 'fa solid fa-power-off',
+    //     label: 'Cerrar sesión'
+    // }
 ]

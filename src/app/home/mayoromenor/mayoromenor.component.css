@@ -1,0 +1,231 @@
+.gradient-custom {
+    /* fallback for old browsers */
+    background: #6a11cb;
+
+    /* Chrome 10-25, Safari 5.1-6 */
+    background: -webkit-linear-gradient(to right, rgba(106, 17, 203, 1), rgba(37, 117, 252, 1));
+
+    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    background: linear-gradient(to right, rgba(106, 17, 203, 1), rgba(37, 117, 252, 1))
+}
+
+body {
+
+    font-family: "Euclid Circular A", "Poppins";
+}
+
+
+.card-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-repeat: no-repeat;
+    background-size: cover;
+    
+  }
+  
+  .current-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+
+  .game-info h1 {
+    color: #f8f8f8;
+  }
+  
+  .card {
+    width: 120px;
+    height: 200px;
+    background-color: #fff;
+    border: 1px solid #000;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .card img {
+    width: 150px;
+    height: 205px;
+  }
+  
+  .btn-group {
+    display: flex;
+    gap: 20px;
+  }
+  
+  .btn-group button {
+    padding: 10px 20px;
+    font-size: 18px;
+  }
+  
+  .result {
+    font-size: 24px;
+    font-weight: bold;
+    margin-top: 20px;
+    opacity: 0;
+    transition: opacity 4s ease-in-out;
+    padding: 10px;
+  }
+  
+  .score {
+    font-size: 24px;
+  }
+
+  .result.show {
+    opacity: 1; 
+    transition: opacity 1s ease-in-out; 
+    color: #ffffff;
+    background-color: rgba(0, 0, 0, 0.7); 
+    padding: 10px 10px; 
+    border-radius: 10px; 
+  }
+
+  .button-container {
+    border: 0;
+    background-color: #313131ef;
+    color: #f8f8f8;
+    font-family: inherit;
+    padding: 16px 26px;
+    font-size: 16px;
+    border-radius: 40px;
+    font-family: "Euclid Circular A", "Poppins";
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+.navbar-custom {
+  position: fixed;
+  top: 0; 
+  right: 0; 
+  padding: 10px 20px;
+  z-index: 1000;
+  display: flex;
+  align-items: center; 
+}
+
+.navbar-custom a{
+  color: #f3f3f3;
+  text-decoration: none;
+  cursor: pointer;
+  display: flex; 
+  align-items: center;
+}
+
+.user-photo{
+  width: 2rem;
+  min-width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  margin-right: 0.5rem;
+}
+
+.fa-solid fa-power-off {
+    color: #f3f3f3;
+    width: 5rem;
+    min-width: 5rem;
+    height: 5rem;
+}
+
+.logout-button{
+  margin-left: auto;
+  cursor: pointer;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  background-color: transparent;
+  border: none;
+  color: #f3f3f3;
+  display: flex; 
+  align-items: center;
+  position: relative;
+  font-family: "Euclid Circular A", "Poppins";
+
+  i.fa {
+      font-size: 1.5rem; 
+      margin-right: 0.5rem; 
+
+    }
+}
+
+.dropdown-content {
+  position: absolute;
+  top: calc(65% + 10px);
+  right: 0;
+  text-align: center;
+  border-radius: 0.313rem; 
+  padding: 0.2rem; 
+  min-width: 10rem; 
+
+  button {
+    width: 100%;
+    border: none;
+    background: transparent;
+    color: #f3f3f3;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    padding: 0.5rem 0;
+    transition: background-color 0.3s;
+  }
+
+}
+
+.logout-button:hover + .dropdown-content {
+  display: block;
+}
+  
+.score {
+  color: #f8f8f8;
+  font-size: 28px;
+}
+
+h2{
+    color:#000;
+}
+
+.btn-animate {
+    animation: pulse 1s infinite alternate;
+  }
+  
+  @keyframes pulse {
+    from {
+      transform: scale(1);
+    }
+    to {
+      transform: scale(1.1);
+    }
+  }
+
+
+
+  @keyframes slideInDown {
+    0% {
+      transform: translateY(-100%);
+    }
+    100% {
+      transform: translateY(0);
+    }
+  }
+  
+  @keyframes slideInLeft {
+    0% {
+      transform: translateX(-100%);
+    }
+    100% {
+      transform: translateX(0);
+    }
+  }
+  
+  .btn-animate {
+    animation: slideInLeft 0.5s ease-in-out;
+  }
+  
+  .card {
+    animation: slideInDown 0.5s ease-in-out;
+  }

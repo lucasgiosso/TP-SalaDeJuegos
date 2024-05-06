@@ -26,6 +26,7 @@ export class AuthService {
 
   async register(email: string, password: string) {
     const user = await createUserWithEmailAndPassword(this.authFirebase, email, password);
+    this.dataBase.guardarLogin(email);
     return await signInWithEmailAndPassword(this.authFirebase, email, password);
   }
 
@@ -37,19 +38,6 @@ export class AuthService {
         console.error('Error al verificar el usuario:', error);
         return false;
       });
-  }
-
-  async sendPasswordResetEmail(email: string) {
-    try {
-      const userExists = await this.checkIfUserExists(email);
-      if (userExists) {
-        return sendPasswordResetEmail(this.authFirebase, email);
-      } else {
-        throw new Error('El correo electrónico no está asociado a ninguna cuenta');
-      }
-    } catch (error) {
-      throw error;
-    }
   }
 
   getCurrentUser(): Observable<User | null> {

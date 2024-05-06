@@ -1,58 +1,99 @@
-  <body class="vh-100 gradient-custom">
 
-    <div class="navbar-custom">
-      <a (click)="toggleDropdown()">
-        <span *ngIf="currentUser$ | async as user">
-          <span *ngIf="user.photoURL">
-            <img [src]="user.photoURL" alt="Foto de perfil de usuario" class="user-photo">
-          </span>
-          <span *ngIf="!user.photoURL">
-            <i class="fas fa-user-circle"></i>&nbsp;&nbsp;
-          </span>
-          {{ user.displayName ? user.displayName : user.email }}
+<body class="vh-100 gradient-custom">
+
+  <div class="navbar-custom">
+    <a (click)="toggleDropdown()">
+      <span *ngIf="currentUser$ | async as user">
+        <span *ngIf="user.photoURL">
+          <img [src]="user.photoURL" alt="Foto de perfil de usuario" class="user-photo">
         </span>
-      </a>
-      <div class="dropdown-content" *ngIf="isDropdownOpen">
-        <button class="logout-button" (click)="logout()">
-          <i class="fa solid fa-power-off"></i> Cerrar Sesión
-        </button>
-      </div>
+        <span *ngIf="!user.photoURL">
+          <i class="fas fa-user-circle"></i>&nbsp;&nbsp;
+        </span>
+        {{ user.displayName ? user.displayName : user.email }}
+      </span>
+    </a>
+    <div class="dropdown-content" *ngIf="isDropdownOpen">
+      <button class="logout-button" (click)="logout()">
+        <i class="fa solid fa-power-off"></i> Cerrar Sesión
+      </button>
     </div>
+  </div>
 
-    <div class="sidenav" [ngClass]="collapsed ? 'sidenav-collapsed': '' ">
-      <div class="logo-container">
-        <button class="logo"(click)="toggleCollapse()">SG</button>
-        <div class="logo-text" *ngIf="collapsed">Sala de Juegos</div>
-        <button class="btn-close" *ngIf="collapsed" (click)="closeSidenav()">
-          <i class="fa-solid fa-xmark fa-xl" style="color: #ffffff;"></i>
-        </button>
-        
-    </div>
-
-      <ul class="sidenav-nav">
-        <li class="sidenav-nav-item" *ngFor="let data of navData">
-          <a class="sidenav-nav-link" [routerLink]="[data.routeLink]" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="handleNavigation(data.routeLink)">
-            <i class="sidenav-link-icon" [class]="data.icon"></i>
-            <span class="sidenav-link-text" *ngIf="collapsed">{{ data.label }}</span>
-          </a>
-        </li>
-      </ul>
+  <div class="sidenav" [ngClass]="collapsed ? 'sidenav-collapsed': '' ">
+    <div class="logo-container">
+      <button class="logo"(click)="toggleCollapse()">SG</button>
+      <div class="logo-text" *ngIf="collapsed">Sala de Juegos</div>
+      <button class="btn-close" *ngIf="collapsed" (click)="closeSidenav()">
+        <i class="fa-solid fa-xmark fa-xl" style="color: #ffffff;"></i>
+      </button>
       
-      <!-- <app-chat *ngIf="currentUser$ | async as user"></app-chat> -->
     </div>
 
-      <div class="container py-5 h-100">
-        <div class="row d-flex justify-content-center align-items-center h-100">
-          <div class="col-12 col-md-8 col-lg-6 col-xl-5">
-            <div class="card bg-dark text-white" style="border-radius: 1rem;">
-              <div class="card-body p-5 text-center">
-                <!-- <div class="mb-md-5 mt-md-4 pb-5"> -->
-                  <h2 class="fw-bold mb-2 text-uppercase">Bienvenido a la página de inicio</h2>
-                <!-- </div> -->
+    <ul class="sidenav-nav">
+      <li class="sidenav-nav-item" *ngFor="let data of navData">
+        <a class="sidenav-nav-link" [routerLink]="[data.routeLink]" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="handleNavigation(data.routeLink)">
+          <i class="sidenav-link-icon" [class]="data.icon"></i>
+          <span class="sidenav-link-text" *ngIf="collapsed">{{ data.label }}</span>
+        </a>
+      </li>
+    </ul>
+    
+    <app-chat *ngIf="currentUser$ | async as user"></app-chat>
+    
+  </div>
+  
+  <div class="container py-5 h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+
+      <div class="card bg-dark text-white card-welcome" style="border-radius: 1rem;">
+        <div class="card-body p-4 text-center">
+          <h2 class="fw-bold mb- text-uppercase">¡ Bienvenido a la sala de juegos !</h2>
+        </div>
+      </div>
+
+      <div class="col-12 col-md-8 col-lg-10">
+        
+        <div class="row">
+          <div class="col-md-3 mb-3">
+            <div class="card d-flex flex-column justify-content-center card-juego">
+              <img [src]="imagenAhorcado" class="card-img-top" (mouseenter)="highlightButton($event)" (mouseleave)="unhighlightButton($event)">
+              <div class="card-body text-center">
+                <h5 class="card-title">Ahorcado</h5>
+                <button class="btn btn-outline-light btn-lg px-5 btn-jugar w-100" (click)="ahorcado()">Jugar</button>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3 mb-3">
+            <div class="card d-flex flex-column justify-content-center card-juego">
+              <img [src]="imagenMayorOMenor" class="card-img-top" (mouseenter)="highlightButton($event)" (mouseleave)="unhighlightButton($event)">
+              <div class="card-body text-center">
+                <h5 class="card-title">Mayor o Menor</h5>
+                <button class="btn btn-outline-light btn-lg px-5 btn-jugar w-100" (click)="mayorOMenor()">Jugar</button>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3 mb-3">
+            <div class="card d-flex flex-column justify-content-center card-juego">
+              <img [src]="imagenPreguntados" class="card-img-top" (mouseenter)="highlightButton($event)" (mouseleave)="unhighlightButton($event)">
+              <div class="card-body text-center">
+                <h5 class="card-title">Preguntados</h5>
+                <button class="btn btn-outline-light btn-lg px-5 btn-jugar w-100" (click)="preguntados()">Jugar</button>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3 mb-3">
+            <div class="card d-flex flex-column justify-content-center card-juego">
+              <img [src]="imagenWS" class="card-img-top" (mouseenter)="highlightButton($event)" (mouseleave)="unhighlightButton($event)">
+              <div class="card-body text-center">
+                <h5 class="card-title">Word Scramble</h5>
+                <button class="btn btn-outline-light btn-lg px-5 btn-jugar w-100" (click)="ws()">Jugar</button>
               </div>
             </div>
           </div>
         </div>
-      </div>
-  </body>
 
+      </div>
+    </div>
+  </div>
+</body>

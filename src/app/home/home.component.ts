@@ -7,6 +7,8 @@ import { Observable } from 'rxjs';
 import { navbarData } from './home-data';
 import { User } from 'firebase/auth';
 import Swal from 'sweetalert2';
+import { CarouselModule } from 'ngx-bootstrap/carousel';
+import { ChatComponent } from '../../chat/chat.component';
 
 interface SideNavToggle {
   screenWidth: number;
@@ -17,7 +19,7 @@ interface SideNavToggle {
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [FormsModule,CommonModule,RouterLink,RouterLinkActive],
+  imports: [FormsModule,CommonModule,RouterLink,RouterLinkActive, CarouselModule, ChatComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
@@ -29,6 +31,10 @@ export class HomeComponent implements OnInit{
   navData = navbarData;
   currentUser$: Observable<User | null>;
   isDropdownOpen = false;
+  imagenAhorcado: string = "https://firebasestorage.googleapis.com/v0/b/saladejuegos-f63ca.appspot.com/o/Ahorcado.png?alt=media&token=6d0320d2-cce3-4121-8a9c-2ce821a0b4e0";
+  imagenMayorOMenor: string ="https://firebasestorage.googleapis.com/v0/b/saladejuegos-f63ca.appspot.com/o/mayor.png?alt=media&token=3b9ec590-927a-46a5-9f88-320dbc83c92c";
+  imagenPreguntados: string = "https://firebasestorage.googleapis.com/v0/b/saladejuegos-f63ca.appspot.com/o/preguntados.png?alt=media&token=c55ab4d1-b859-4e28-aa5d-6a1651723f76";
+  imagenWS: string = "https://firebasestorage.googleapis.com/v0/b/saladejuegos-f63ca.appspot.com/o/wordScramble.png?alt=media&token=e4c37d15-bcf9-404b-a431-6e35fde2d224";
 
   constructor(private router: Router, private auth: AuthService) 
   {
@@ -89,6 +95,33 @@ export class HomeComponent implements OnInit{
       this.logout();
     }
   }
+
+  highlightButton(event: any) {
+    const cardBody = event.target.nextElementSibling;
+    cardBody.classList.add('highlight');
+  }
+  
+  unhighlightButton(event: any) {
+    const cardBody = event.target.nextElementSibling;
+    cardBody.classList.remove('highlight');
+  }
+
+  ahorcado() {
+    this.router.navigate(['home/ahorcado']);
+  }
+
+  mayorOMenor() {
+    this.router.navigate(['home/mayoromenor']);
+  }
+
+  preguntados() {
+    this.router.navigate(['home/preguntados']);
+  }
+
+  ws() {
+    this.router.navigate(['home/word-scramble']);
+  }
+
 
   ngOnDestroy() {
     document.removeEventListener('click', this.onDocumentClick.bind(this));

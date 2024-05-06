@@ -1,3 +1,4 @@
+
 .gradient-custom {
     /* fallback for old browsers */
     background: #6a11cb;
@@ -23,7 +24,6 @@
 body {
     display: flex;
     height: 100vh;
-    background-image: url(https://firebasestorage.googleapis.com/v0/b/tp-sala-de-juegos-diazgiossol.appspot.com/o/background.svg?alt=media&token=dc633112-e417-4d83-85cd-769218c72573);
     background-repeat: no-repeat;
     background-size: cover;
     font-family: "Euclid Circular A", "Poppins";
@@ -255,3 +255,95 @@ body {
 .logout-button:hover+.dropdown-content {
     display: block;
 }
+
+
+.btn-jugar {
+    transition: all 0.3s ease;
+  }
+  
+
+  .btn-jugar:hover,
+.card-body.highlight .btn-jugar {
+  background-color: #ffc107;
+  color: #000000;
+  transform: scale(1.05);
+}
+
+.card-juego {
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  
+  .card-juego:hover {
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+
+  .card-welcome {
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  
+  .card-welcome:hover {
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+
+
+  .card-welcome {
+    overflow: hidden;
+  }
+  
+  .carousel {
+    position: relative;
+    width: 100%;
+    max-width: 500px; /* Ancho máximo del carrusel */
+    margin: auto;
+  }
+  
+  .slides {
+    display: flex;
+  }
+  
+  .slide {
+    flex: 1;
+    opacity: 0;
+    transition: opacity 0.5s;
+  }
+  
+  input[name="slide"] {
+    display: none;
+  }
+  
+  input[id="slide1"]:checked ~ .slides .slide1 {
+    opacity: 1;
+  }
+  
+  input[id="slide2"]:checked ~ .slides .slide2 {
+    opacity: 1;
+  }
+  
+  input[id="slide3"]:checked ~ .slides .slide3 {
+    opacity: 1;
+  }
+  
+  .navigation {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  
+  .navigation label {
+    cursor: pointer;
+    border-radius: 50%;
+    width: 15px;
+    height: 15px;
+    background-color: white;
+    display: inline-block;
+    margin: 0 5px;
+  }
+  
+  #slide1:checked ~ .navigation label:nth-child(1),
+  #slide2:checked ~ .navigation label:nth-child(2),
+  #slide3:checked ~ .navigation label:nth-child(3) {
+    background-color: #17a2b8; /* Color del indicador activo */
+  }

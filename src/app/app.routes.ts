@@ -23,6 +23,18 @@ export const routes: Routes = [
         loadComponent: () => import('./register/register.component').then(m => m.RegisterComponent)
     },
     {
+        path: 'home/ahorcado',
+        loadComponent: () => import('./home/ahorcado/ahorcado.component').then(m => m.AhorcadoComponent)
+    },
+    {
+        path: 'chat',
+        loadComponent: () => import('../chat/chat.component').then(m => m.ChatComponent)
+    },
+    {
+        path: 'home/mayoromenor',
+        loadComponent: () => import('./home/mayoromenor/mayoromenor.component').then(m => m.MayoromenorComponent)
+    },
+    {
         path: '**',
         loadComponent: () => import('./error/error.component').then(m => m.ErrorComponent)
     },
