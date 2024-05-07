@@ -44,6 +44,7 @@ export class AhorcadoComponent implements OnInit{
   ngOnInit() {
     this.currentUser$ = this.auth.getCurrentUser();
     this.iniciarNuevoJuego();
+    document.addEventListener('click', this.onDocumentClick.bind(this));
   }
 
   public onClick(event: any): void 
@@ -182,6 +183,12 @@ export class AhorcadoComponent implements OnInit{
     }
   }
 
+  onDocumentClick(event: MouseEvent) {
+    if (!(<HTMLElement>event.target).closest('.navbar-custom')) {
+      this.isDropdownOpen = false;
+    }
+  }
+
   toggleDropdown() {
     this.isDropdownOpen = !this.isDropdownOpen;
     this.showLogoutButton = this.isDropdownOpen; 
@@ -210,5 +217,10 @@ export class AhorcadoComponent implements OnInit{
       }
     });
   }
+
+  ngOnDestroy() {
+    document.removeEventListener('click', this.onDocumentClick.bind(this));
+  }
+
 
 }

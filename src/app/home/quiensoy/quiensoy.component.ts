@@ -43,6 +43,11 @@ export class QuiensoyComponent implements OnInit{
     this.router.navigate(['/home']);
   }
 
+  onClickWs(event: any): void 
+  {
+    this.router.navigate(['/home/word-scramble']);
+  }
+
   toggleDropdown() {
     this.isDropdownOpen = !this.isDropdownOpen;
 

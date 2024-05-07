@@ -30,6 +30,7 @@ export class MayoromenorComponent {
   lastCards: number[] = [];
   isDropdownOpen = false;
   showLogoutButton = false;
+  
   @ViewChild('resultMessage', { static: false }) resultMessageElement: ElementRef | undefined;
 
   constructor(private auth: AuthService, private router: Router) 
@@ -38,10 +39,17 @@ export class MayoromenorComponent {
 
   }
     
-    ngOnInit() {
-      this.currentUser$ = this.auth.getCurrentUser();
-      this.startGame();
+  ngOnInit() {
+    this.currentUser$ = this.auth.getCurrentUser();
+    this.startGame();
+    document.addEventListener('click', this.onDocumentClick.bind(this));
+  }
+
+  onDocumentClick(event: MouseEvent) {
+    if (!(<HTMLElement>event.target).closest('.navbar-custom')) {
+      this.isDropdownOpen = false;
     }
+  }
 
   startGame() {
     this.title = "Juego del Mayor o Menor";
@@ -141,6 +149,10 @@ export class MayoromenorComponent {
         this.router.navigate(['/home/mayorOMenor']);
       }
     });
+  }
+
+  ngOnDestroy() {
+    document.removeEventListener('click', this.onDocumentClick.bind(this));
   }
 
 }

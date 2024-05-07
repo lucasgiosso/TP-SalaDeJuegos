@@ -35,6 +35,14 @@ export const routes: Routes = [
         loadComponent: () => import('./home/mayoromenor/mayoromenor.component').then(m => m.MayoromenorComponent)
     },
     {
+        path: 'home/word-scramble',
+        loadComponent: () => import('./home/word-scramble/word-scramble.component').then(m => m.WordScrambleComponent)
+    },
+    {
+        path: 'home/preguntados',
+        loadComponent: () => import('./home/preguntados/preguntados.component').then(m => m.PreguntadosComponent)
+    },
+    {
         path: '**',
         loadComponent: () => import('./error/error.component').then(m => m.ErrorComponent)
     },

@@ -1,0 +1,274 @@
+.gradient-custom {
+    
+    background: #6a11cb;
+
+    background: -webkit-linear-gradient(to right, rgba(106, 17, 203, 1), rgba(37, 117, 252, 1));
+
+    background: linear-gradient(to right, rgba(106, 17, 203, 1), rgba(37, 117, 252, 1))
+}
+
+.card-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+
+body{
+    display: flex;
+    padding: 0 10px;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background: #9d14dc;
+    font-family: "Poppins", sans-serif;
+}
+
+.container {
+    width: 420px;
+    border-radius: 10px;
+    background: #222;
+}
+
+h2{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.container h2 {
+    font-size: 28px;
+    font-weight: 600;
+    padding: 20px 25px;
+    border-bottom: 1px solid #333;
+    color: #fff;
+}
+
+.container .content{
+    margin: 25px 20px 35px;
+}
+
+.content .word{
+    user-select: none;
+    font-size: 36px;
+    font-weight: 600;
+    text-align: center;
+    letter-spacing: 18px;
+    margin-right: -18px;
+    word-break: break-all;
+    text-transform: uppercase;
+    color: #5372f0;
+}
+
+.content .details{
+    margin: 25px 0 20px;
+}
+
+.details p {
+    font-size: 18px;
+    margin-bottom: 10px;
+    color: #bbb;
+}
+
+.content input{
+    width: 100%;
+    height: 50px;
+    outline: none;
+    padding: 0 15px;
+    font-size: 16px;
+    border-radius: 8px;
+    border: 1px solid #333;
+    background-color: #111;
+    color: #bbb;
+}
+
+.content input:focus {
+    border-color: #5372f0;
+    background-color: #222;
+    color: #fff
+}
+
+.content input::placeholder{
+    color: #555;
+}
+
+.content input:focus::placeholder{
+    color: #bbb;
+}
+
+.content .buttons{
+    display: flex;
+    margin-top: 20px;
+    justify-content: space-between;
+}
+
+.buttons button{
+    border: none;
+    outline: none;
+    color: #fff;
+    cursor: pointer;
+    padding: 14px 0;
+    font-size: 16px;
+    border-radius: 8px;
+    width: calc(50% - 6px);
+}
+
+.buttons button:active{
+    transform: scale(0.97);
+}
+
+.buttons .refresh-word{
+    background: #6c757d;
+}
+
+.buttons .refresh-word:hover{
+    background: #5f666d;
+}
+
+.buttons .check-word{
+    background: #5372f0;
+}
+
+.buttons .check-word:hover{
+    background: #2c52ed;
+}
+
+
+.navbar-custom {
+    position: fixed;
+    top: 0; 
+    right: 0; 
+    padding: 10px 20px;
+    z-index: 1000;
+    display: flex;
+    align-items: center; 
+  }
+  
+  .navbar-custom a{
+    color: #f3f3f3;
+    text-decoration: none;
+    cursor: pointer;
+    display: flex; 
+    align-items: center;
+  }
+  
+  .user-photo{
+    width: 2rem;
+    min-width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    margin-right: 0.5rem;
+  }
+
+  .fa-solid fa-power-off {
+    color: #f3f3f3;
+    width: 5rem;
+    min-width: 5rem;
+    height: 5rem;
+}
+
+  .logout-button{
+    margin-left: auto;
+    cursor: pointer;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    background-color: transparent;
+    border: none;
+    color: #f3f3f3;
+    display: flex; 
+    align-items: center;
+    position: relative;
+    font-family: "Euclid Circular A", "Poppins";
+  
+    i.fa {
+        font-size: 1.5rem; 
+        margin-right: 0.5rem; 
+  
+      }
+  }
+  
+  .dropdown-content {
+    position: absolute;
+    top: calc(65% + 10px);
+    right: 0;
+    text-align: center;
+    border-radius: 0.313rem; 
+    padding: 0.2rem; 
+    min-width: 10rem; 
+  
+    button {
+      width: 100%;
+      border: none;
+      background: transparent;
+      color: #f3f3f3;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      padding: 0.5rem 0;
+      transition: background-color 0.3s;
+    }
+  
+  }
+  
+  .logout-button:hover + .dropdown-content {
+    display: block;
+  }
+
+  .back-button {
+    border: 0;
+    background-color: #313131ef;
+    color: #f8f8f8;
+    font-family: inherit;
+    padding: 16px 26px;
+    font-size: 16px;
+    border-radius: 40px;
+    font-family: "Euclid Circular A", "Poppins";
+    cursor: pointer;
+    margin-top: 20px;
+  }
+
+  .score {
+    color: #f8f8f8;
+    font-size: 28px;
+  }
+
+  .start-button {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.start-game {
+    background-color: red;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    animation: pulse 2s infinite;
+}
+
+.start-game:hover {
+    background-color: darkred;
+    transform: scale(1.1); 
+}
+
+.start-game:active {
+    transform: scale(0.9); 
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+    100% {
+        transform: scale(1);
+    }
+}

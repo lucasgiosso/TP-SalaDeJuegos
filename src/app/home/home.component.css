@@ -1,12 +1,9 @@
-
 .gradient-custom {
-    /* fallback for old browsers */
+
     background: #6a11cb;
 
-    /* Chrome 10-25, Safari 5.1-6 */
     background: -webkit-linear-gradient(to right, rgba(106, 17, 203, 1), rgba(37, 117, 252, 1));
 
-    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
     background: linear-gradient(to right, rgba(106, 17, 203, 1), rgba(37, 117, 252, 1))
 }
 
@@ -287,63 +284,6 @@ body {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   }
 
-
   .card-welcome {
     overflow: hidden;
-  }
-  
-  .carousel {
-    position: relative;
-    width: 100%;
-    max-width: 500px; /* Ancho máximo del carrusel */
-    margin: auto;
-  }
-  
-  .slides {
-    display: flex;
-  }
-  
-  .slide {
-    flex: 1;
-    opacity: 0;
-    transition: opacity 0.5s;
-  }
-  
-  input[name="slide"] {
-    display: none;
-  }
-  
-  input[id="slide1"]:checked ~ .slides .slide1 {
-    opacity: 1;
-  }
-  
-  input[id="slide2"]:checked ~ .slides .slide2 {
-    opacity: 1;
-  }
-  
-  input[id="slide3"]:checked ~ .slides .slide3 {
-    opacity: 1;
-  }
-  
-  .navigation {
-    position: absolute;
-    bottom: 10px;
-    left: 50%;
-    transform: translateX(-50%);
-  }
-  
-  .navigation label {
-    cursor: pointer;
-    border-radius: 50%;
-    width: 15px;
-    height: 15px;
-    background-color: white;
-    display: inline-block;
-    margin: 0 5px;
-  }
-  
-  #slide1:checked ~ .navigation label:nth-child(1),
-  #slide2:checked ~ .navigation label:nth-child(2),
-  #slide3:checked ~ .navigation label:nth-child(3) {
-    background-color: #17a2b8; /* Color del indicador activo */
   }

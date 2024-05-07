@@ -7,7 +7,6 @@ import { Observable } from 'rxjs';
 import { navbarData } from './home-data';
 import { User } from 'firebase/auth';
 import Swal from 'sweetalert2';
-import { CarouselModule } from 'ngx-bootstrap/carousel';
 import { ChatComponent } from '../../chat/chat.component';
 
 interface SideNavToggle {
@@ -19,7 +18,7 @@ interface SideNavToggle {
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [FormsModule,CommonModule,RouterLink,RouterLinkActive, CarouselModule, ChatComponent],
+  imports: [FormsModule,CommonModule,RouterLink,RouterLinkActive, ChatComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })

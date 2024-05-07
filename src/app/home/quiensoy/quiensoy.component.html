@@ -1,11 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
+
+<body class="vh-100 gradient-custom d-flex flex-column justify-content-between">
 
     <div class="navbar-custom">
       <a (click)="toggleDropdown()">
@@ -39,12 +33,12 @@
                 jugadores tienen que averiguar la palabra 
                 correcta utilizando esas letras aleatorias.
             </p>
-            <button>Ir a Word Scramble</button>
+            <button (click)="onClickWs($event)">Ir a Word Scramble</button>
         </div>
     </div>
     <input type="button" [value]="btnVolver" [class]="['button-container']" (click)="onClick($event)"/>
     
 </div>
 </body>
-</html>
+
 

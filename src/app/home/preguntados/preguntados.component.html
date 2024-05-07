@@ -1,1 +1,84 @@
-<p>preguntados works!</p>
+
+<body class="vh-100 gradient-custom">
+
+  <div class="navbar-custom">
+    <a (click)="toggleDropdown()">
+      <span *ngIf="currentUser$ | async as user">
+        <span *ngIf="user.photoURL">
+          <img [src]="user.photoURL" alt="Foto de perfil de usuario" class="user-photo">
+        </span>
+        <span *ngIf="!user.photoURL">
+          <i class="fas fa-user-circle"></i>&nbsp;&nbsp;
+        </span>
+        {{ user.displayName ? user.displayName : user.email }}
+      </span>
+    </a>
+    <div class="dropdown-content" *ngIf="isDropdownOpen">
+      <button class="logout-button" (click)="logout()">
+        <i class="fa solid fa-power-off"></i> Cerrar Sesión
+      </button>
+    </div>
+  </div>
+
+  <div class="roulette-container" *ngIf="showRoulette">
+    <div class="game-info text-center">
+        <h1>{{ title }}</h1>
+        <h3>{{ explicacion }}</h3>
+    </div>
+    <div class="roulette">
+        <div class="wheel">
+            <div class="sector" *ngFor="let pregunta of preguntas">
+                <div class="sector">
+                    {{ pregunta.sector }}
+                    <div class="bandera-img-container">
+                        <img [src]="pregunta.flagUrl" [alt]="pregunta.pregunta" class="bandera-img" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <input type="button" [value]="btnVolver" [class]="['back-button']" (click)="onClick($event)" />
+</div>
+
+<app-chat *ngIf="currentUser$ | async as user"></app-chat>
+
+<div class="spin-button-container" *ngIf="showRoulette">
+<button class="spin-button" (click)="spinRoulette()" *ngIf="showRoulette">
+  <span class="icon">▲</span> Girar 
+</button>
+</div>
+
+<div class="game-container" *ngIf="gameActive && isAnswered">
+  <div class="question-container">
+    <h2>Pregunta:</h2>
+    <p>{{ questionText }}</p>
+  </div>
+
+  <div class="answers-container">
+    <h2>Respuestas:</h2>
+    <ul>
+      <li *ngFor="let option of answerOptions">
+        <button (click)="checkAnswer(option)">{{ option }}</button>
+      </li>
+    </ul>
+  </div>
+
+  <div class="timer-container">
+    <h2>Temporizador</h2>
+    <p>{{ secondsLeft }} segundos</p>
+  </div>
+
+  <div class="score-container">
+    <h2>Puntuación:</h2>
+    <p>{{ score }}</p>
+  </div>
+  
+  <input type="button" [value]="btnVolver" [class]="['back-button']" (click)="onClick($event)" />
+  
+</div>
+
+
+
+
+
+</body>
