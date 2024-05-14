@@ -15,6 +15,7 @@ body{
     justify-content: center;
     min-height: 100vh;
     font-family: "Euclid Circular A", "Poppins";
+    overflow-y: auto;
 }
 
 .navbar-custom {

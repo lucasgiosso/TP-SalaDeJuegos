@@ -20,13 +20,19 @@
       </div>
 
     <app-chat *ngIf="currentUser$ | async as user"></app-chat>
-        
-    <div class="card-container">
+
     
-        <div class="game-info text-center">
-            <h1>{{ title }}</h1>
-        </div>
-        
+    <div class="game-info text-center">
+      <p class="game-description"> Instrucciones: </p>
+      <p class="game-description">
+        Es un juego en el que las letras que pueden formar una palabra con sentido se barajan o </p>
+      <p class="game-description"> 
+        revuelven al azar, y los jugadores tienen que averiguar la palabra correcta utilizando esas letras aleatorias.</p>
+        <p class="game-description"> Recorda que tenes 3 vidas.</p>
+    </div>
+
+    <div class="card-container">
+      
         <div class="container">
             <h2>Word Scramble</h2>
             <div class="content">
