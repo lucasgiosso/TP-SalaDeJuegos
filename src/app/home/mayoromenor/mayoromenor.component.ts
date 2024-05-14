@@ -30,6 +30,8 @@ export class MayoromenorComponent {
   lastCards: number[] = [];
   isDropdownOpen = false;
   showLogoutButton = false;
+
+  gameOver: boolean = false;
   
   @ViewChild('resultMessage', { static: false }) resultMessageElement: ElementRef | undefined;
 
@@ -84,6 +86,9 @@ export class MayoromenorComponent {
   }
 
   makeGuess(guess: 'mayor' | 'menor') {
+
+    if (this.gameOver) return;
+
     this.nextCard = this.getRandomCard();
     this.nextCard1 = this.getRandomCard1();
     
@@ -99,6 +104,8 @@ export class MayoromenorComponent {
     } 
     else {
       this.resultMessageText = '¡Incorrecto!'; 
+      this.gameOver = true;
+      this.showGameOverMessage();
     }
 
     this.currentCard = this.nextCard;
@@ -114,6 +121,24 @@ export class MayoromenorComponent {
 
       this.resultMessageElement?.nativeElement.classList.remove('show');
     }, 1000);
+  }
+
+  showGameOverMessage() {
+    Swal.fire({
+      icon: 'error',
+      title: 'Uh...perdiste',
+      text: `¡Te has equivocado! La partida ha terminado. ¿Quieres jugar de nuevo?`,
+      showCancelButton: true,
+      confirmButtonText: 'Sí',
+      cancelButtonText: 'No',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.startGame();
+        this.gameOver = false;
+      } else {
+        this.router.navigate(['/home']);
+      }
+    });
   }
 
   public onClick(event: any): void {

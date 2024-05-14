@@ -28,7 +28,7 @@ body{
 }
 
 .container {
-    width: 420px;
+    width: 450px;
     border-radius: 10px;
     background: #222;
 }
@@ -102,7 +102,7 @@ h2{
 .content .buttons{
     display: flex;
     margin-top: 20px;
-    justify-content: space-between;
+    justify-content: center;
 }
 
 .buttons button{
@@ -271,4 +271,8 @@ h2{
     100% {
         transform: scale(1);
     }
+}
+
+.check-word {
+    text-align: center;
 }

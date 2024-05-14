@@ -1,7 +1,7 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { AuthService } from '../../../../src/app/services/auth.service';
 import { ApiService } from '../../../../src/app/services/api.service';
-import { Observable, Subject, Subscription, of, takeUntil, timer } from 'rxjs';
+import { Observable, Subject, Subscription, of, takeUntil, takeWhile, timer } from 'rxjs';
 import { User } from 'firebase/auth';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
@@ -9,6 +9,7 @@ import Swal from 'sweetalert2';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ChatComponent } from '../../../chat/chat.component';
 import { CommonModule } from '@angular/common';
+import { faL } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-preguntados',
@@ -33,7 +34,7 @@ export class PreguntadosComponent {
   timeIsUpAlertShown: boolean = false;
   questionText: string = '';
   answerText: string = '';
-  secondsLeft: number = 40; 
+  secondsLeft: number = 30; 
   timer$: Observable<number> = timer(0, 1000);
   destroy$: Subject<void> = new Subject<void>();
   userAnswer: string = '';
@@ -44,9 +45,11 @@ export class PreguntadosComponent {
   private isSpinning: boolean = false;
   showRoulette = true;
   sectorImages: string[] = [];
-  private timerSubscription: Subscription | undefined;
-  
-selectedQuestion: any;
+  private timerSubscription: Subscription | null = null;
+  selectedSector: number = 0;
+  currentRotationValue: number = 0;
+  selectedQuestion: any;
+  isGameReset: boolean = false;
 
   preguntas = [
     {
@@ -56,7 +59,7 @@ selectedQuestion: any;
       respuestaIncorrecta1: 'Londres',
       respuestaIncorrecta2: 'Berlín',
       respuestaIncorrecta3: 'Madrid',
-      sector: 2, 
+      sector: 1, 
       flagUrl:'https://flagcdn.com/fr.svg'
 
     },
@@ -67,7 +70,7 @@ selectedQuestion: any;
       respuestaIncorrecta1: 'Chile',
       respuestaIncorrecta2: 'Rosario',
       respuestaIncorrecta3: 'Rio Negro',
-      sector: 1, 
+      sector: 2, 
       flagUrl:'https://flagcdn.com/ar.svg'
 
     },
@@ -78,7 +81,7 @@ selectedQuestion: any;
       respuestaIncorrecta1: 'Kabul',
       respuestaIncorrecta2: 'Argel',
       respuestaIncorrecta3: 'Viena',
-      sector: 7, 
+      sector: 3, 
       flagUrl:'https://flagcdn.com/de.svg'
 
     },
@@ -89,7 +92,7 @@ selectedQuestion: any;
       respuestaIncorrecta1: 'Luanda',
       respuestaIncorrecta2: 'Ereván',
       respuestaIncorrecta3: 'Camberra',
-      sector: 6, 
+      sector: 4, 
       flagUrl:'https://flagcdn.com/al.svg'
 
     },
@@ -111,7 +114,7 @@ selectedQuestion: any;
       respuestaIncorrecta1: 'Uagadugú',
       respuestaIncorrecta2: 'Guitega',
       respuestaIncorrecta3: 'Timbu',
-      sector: 4, 
+      sector: 6, 
       flagUrl:'https://flagcdn.com/br.svg'
 
     },
@@ -122,7 +125,7 @@ selectedQuestion: any;
       respuestaIncorrecta1: 'Doha',
       respuestaIncorrecta2: 'Yamena',
       respuestaIncorrecta3: 'Praia',
-      sector: 3, 
+      sector: 7, 
       flagUrl:'https://flagcdn.com/ca.svg'
     },
   ];
@@ -133,10 +136,6 @@ selectedQuestion: any;
       this.obtenerDatosDeTodosLosPaises();
     }
 
-    // ngOnInit() {
-    //   this.apiService.obtenerPaises();
-    //   this.startTimer();
-    // }
 
     ngOnInit() {
       this.apiService.obtenerPaises().subscribe((listaPaises: any) => {
@@ -151,9 +150,8 @@ selectedQuestion: any;
           this.paises.push(pais);
         });
         this.obtenerDatosDeTodosLosPaises();
-        //this.loadQuestionAutomatically();
       });
-      this.startTimer();
+
     }
  
 
@@ -167,41 +165,50 @@ selectedQuestion: any;
       this.router.navigate(['/home']);
     }
   
-    getFlagUrlForSector(sector: number): Observable<string | undefined> {
-      const sectorInfo = this.preguntas.find(info => info.sector === sector);
-      if (sectorInfo) {
-        return this.http.get<string>(sectorInfo.flagUrl);
-      }
-      return of(undefined); 
-    }
-
     checkAnswer(selectedAnswer: string) {
       const currentQuestion = this.preguntas.find(question => question.pregunta === this.questionText);
     
       if (currentQuestion) {
         if (selectedAnswer === currentQuestion.respuestaCorrecta) {
-          this.increaseScore(10);
+          this.increaseScore(1);
           this.gameActive = false;
           this.resetGame();
+          this.timerSubscription?.unsubscribe();
           
           Swal.fire({
             icon: 'success',
             title: '¡Respuesta correcta!',
-            text: 'Has ganado puntos.',
-            confirmButtonText: 'OK'
-          }).then(() => {
-            this.resetGame();
+            html: '<strong>Has ganado un punto!</strong> ¿Quieres seguir jugando?',
+            confirmButtonText: 'Si!',
+            showCancelButton: true, 
+            cancelButtonText: 'Salir',
+            allowOutsideClick: false
+          }).then((result) => {
+            if (result.isConfirmed) {
+              this.resetGame();
+            }
+            else if (result.dismiss === Swal.DismissReason.cancel) {
+              this.router.navigate(['/home']); 
+            }
           });
   
         } else {
-  
+          this.timerSubscription?.unsubscribe();
           Swal.fire({
             icon: 'error',
             title: 'Respuesta incorrecta',
-            html: `La respuesta correcta es: <strong>${currentQuestion.respuestaCorrecta}</strong>`,
-            confirmButtonText: 'OK'
-          }).then(() => {
-            this.resetGame();
+            html: `La respuesta correcta es: <strong>${currentQuestion.respuestaCorrecta}</strong> ¿Quieres seguir jugando?`,
+            confirmButtonText: 'Si!',
+            showCancelButton: true, 
+            cancelButtonText: 'Salir',
+            allowOutsideClick: false
+          }).then((result) => {
+            if (result.isConfirmed) {
+              this.resetGame();
+            }
+            else if (result.dismiss === Swal.DismissReason.cancel) {
+              this.router.navigate(['/home']); 
+            }
           });
         }
       }
@@ -217,73 +224,7 @@ selectedQuestion: any;
       this.score += points;
     }
   
-    // spinRoulette() {
-    //   if (this.isSpinning) {
-    //     return;
-    //   }
-    
-    //   const spinButton = document.querySelector('.spin-button') as HTMLButtonElement;
-    
-    //   if (spinButton) {
-    //     this.isSpinning = true;
-    //     spinButton.disabled = true;
-    
-    //     const roulette = document.querySelector('.roulette') as HTMLElement;
-    
-    //     if (roulette) {
-    //       roulette.style.transition = 'none';
-    //       const currentRotation = roulette.style.transform;
-    //       const matches = currentRotation.match(/-?\d+/);
-    //       const currentRotationValue = matches ? parseInt(matches[0]) : 0;
-    
-    //       const numSectors = 7;
-    
-    //       const randomRotations = 2 + Math.floor(Math.random() * 2);
-    
-    //       const totalRotation = 360 * randomRotations + Math.floor(Math.random() * 360);
-    
-    //       const degreesPerSector = totalRotation / numSectors;
-    
-    //       const rotationValue = currentRotationValue + totalRotation;
-    
-    //       roulette.style.transition = 'transform 4s ease-in-out';
-    //       roulette.style.transform = `rotate(${rotationValue}deg`;
-    
-    //       setTimeout(() => {
-    //         const randomSector = Math.floor(Math.random() * 7) + 1;
-    //         const selectedQuestion = this.preguntas.find(
-    //           (item) => item.sector === randomSector
-    //         );
-  
-    //         console.log('Random Sector:', randomSector);
-    //         console.log('Selected Question:', selectedQuestion);
-    
-    //         if (selectedQuestion) {
-              
-    //           this.selectedPregunta = selectedQuestion.pregunta;
-    //           this.answerOptions = this.getAnswerOptionsForQuestion(selectedQuestion);
-    //           this.showRoulette = false;
-    //           this.isAnswered = true;
-  
-    //           const sectorElement = document.querySelector('.sector-' + randomSector + ' .bandera-img') as HTMLImageElement;
-    //           if (sectorElement) {
-    //             sectorElement.src = selectedQuestion.flagUrl;
-    //           }
-  
-    //           this.loadQuestionAutomatically();
-    //           this.gameActive = true;
-    //           this.startTimer();
-    //         }
-    
-    //         this.isSpinning = false;
-    //         spinButton.disabled = false;
-    //       }, 4000);
-    //     }
-    //   }
-    // }
-
     spinRoulette() {
-
       if (this.isSpinning) {
         return;
       }
@@ -297,79 +238,36 @@ selectedQuestion: any;
         const roulette = document.querySelector('.roulette') as HTMLElement;
     
         if (roulette) {
-          roulette.style.transition = 'none';
-          const currentRotation = roulette.style.transform;
-          const matches = currentRotation.match(/-?\d+/);
-          const currentRotationValue = matches ? parseInt(matches[0]) : 0;
-    
           const numSectors = 7;
+          const randomSector = Math.floor(Math.random() * numSectors) + 1;
+          const degreesPerSector = 360 / numSectors;
     
           const randomRotations = 2 + Math.floor(Math.random() * 2);
-
-          console.log('Selected Question:', randomRotations);
-    
-          const totalRotation = 360 * randomRotations + Math.floor(Math.random() * 360);
-    
-          const degreesPerSector = totalRotation / numSectors;
-    
-          const rotationValue = currentRotationValue + totalRotation;
+          const totalRotation = 360 * randomRotations + (360 - (randomSector - 1) * degreesPerSector) + Math.floor(Math.random() * degreesPerSector);
     
           roulette.style.transition = 'transform 4s ease-in-out';
-          roulette.style.transform = `rotate(${rotationValue}deg`;
+          roulette.style.transform = `rotate(${totalRotation}deg`;
     
-          // setTimeout(() => {
-            
-          //   const randomSector = Math.floor(Math.random() * 7) + 1;
-          //   const selectedQuestion = this.preguntas.find(
-          //     (item) => item.sector === randomSector
-          //   );
-  
-          //   console.log('Random Sector:', randomSector);
-          //   console.log('Selected Question:', selectedQuestion);
-    
-          //   if (selectedQuestion) {
-              
-          //     this.selectedPregunta = selectedQuestion.pregunta;
-          //     this.answerOptions = this.getAnswerOptionsForQuestion(selectedQuestion);
-          //     this.showRoulette = false;
-          //     this.isAnswered = true;
-  
-          //     const sectorElement = document.querySelector('.sector-' + randomSector + ' .bandera-img') as HTMLImageElement;
-          //     if (sectorElement) {
-          //       sectorElement.src = selectedQuestion.flagUrl;
-          //     }
-  
-          //     this.loadQuestionAutomatically(randomSector);
-          //     this.gameActive = true;
-          //     this.startTimer();
-          //   }
-    
-          //   this.isSpinning = false;
-          //   spinButton.disabled = false;
-          // }, 4000);
-
           setTimeout(() => {
-            const randomSector = Math.floor(Math.random() * 7) + 1;
-
-            console.log('Random Sector:', randomSector);
-            
-            // const sectorElement = document.querySelector('.sector-' + randomSector + ' .bandera-img') as HTMLImageElement;
-            
-            this.loadQuestionAutomatically(randomSector);
-            
-            // console.log('Selected Question:', sectorElement);
-            
-            // if (sectorElement) {
-            //   const selectedQuestion = this.preguntas.find(question => question.sector === randomSector);
-            //   if (selectedQuestion) {
-            //     sectorElement.src = selectedQuestion.flagUrl;
-            //   }
-            // }
+            this.selectedSector = randomSector;
     
-            this.showRoulette = false;
-            this.isAnswered = true;
-            this.gameActive = true;
-            this.startTimer();
+            const selectedQuestion = this.preguntas.find(question => question.sector === this.selectedSector);
+    
+            if (selectedQuestion) {
+              this.selectedPregunta = selectedQuestion.pregunta;
+              this.answerOptions = this.getAnswerOptionsForQuestion(selectedQuestion);
+              this.showRoulette = false;
+              this.isAnswered = true;
+    
+              const sectorElement = document.querySelector('.sector-' + this.selectedSector + ' .bandera-img') as HTMLImageElement;
+              if (sectorElement) {
+                sectorElement.src = selectedQuestion.flagUrl;
+              }
+    
+              this.loadQuestionAutomatically(this.selectedSector);
+              this.gameActive = true;
+              this.startTimer();
+            }
     
             this.isSpinning = false;
             spinButton.disabled = false;
@@ -378,34 +276,18 @@ selectedQuestion: any;
       }
     }
     
-    // loadQuestionAutomatically() {
-
-    //   const randomIndex = Math.floor(Math.random() * this.preguntas.length);
-    //   const selectedQuestion = this.preguntas[randomIndex];
-      
-    //   if (selectedQuestion) {
-
-    //     this.questionText = selectedQuestion.pregunta;
-    //     this.answerOptions = this.getAnswerOptionsForQuestion(selectedQuestion);
-    //   }
-    //   this.secondsLeft = 40;
-    //   this.startTimer();
-    // }
-
-    loadQuestionAutomatically(selectedSector: number) 
-    {
+    loadQuestionAutomatically(selectedSector: number) {
       const selectedQuestion = this.preguntas.find(question => question.sector === selectedSector);
-      
+    
       if (selectedQuestion) {
         this.questionText = selectedQuestion.pregunta;
         this.answerOptions = this.getAnswerOptionsForQuestion(selectedQuestion);
       }
-      
-      this.secondsLeft = 40;
-      this.startTimer();
+    
     }
   
     resetGame() {
+      this.isGameReset = false;
       this.questionText = '';
       this.answerOptions = [];
       this.isAnswered = false;
@@ -418,36 +300,55 @@ selectedQuestion: any;
         this.timerSubscription.unsubscribe();
       }
     
-      this.secondsLeft = 40;
-      this.timer$ = timer(0, 1000).pipe(
-        takeUntil(this.destroy$)
-      );
+      this.secondsLeft = 30;
     
-      this.timerSubscription = this.timer$.subscribe(() => {
-        if (this.secondsLeft > 0) {
-          this.secondsLeft--;
-        } else {
-          // this.timeIsUp();
-        }
-      });
+      this.timerSubscription = timer(0, 1000)
+        .pipe(
+          takeUntil(this.destroy$),
+          takeWhile(() => this.secondsLeft >= 0)
+        )
+        .subscribe(() => {
+
+          if (this.secondsLeft > 0) {
+            this.secondsLeft--;
+          } else {
+            this.isAnswered = false;
+            this.timeIsUp();
+          }
+        });
     }
-    
+
     timeIsUp() {
+
       if (!this.isAnswered) {
-        const currentQuestion = this.preguntas.find(question => question.pregunta === this.selectedPregunta);
+        this.isAnswered = true;
+
+        const currentQuestion = this.preguntas.find(question => question.sector === this.selectedSector);
         if (currentQuestion) {
+
+          this.timerSubscription?.unsubscribe();
+          
           Swal.fire({
             icon: 'info',
             title: '¡Se acabó el tiempo!',
-            text: 'La respuesta correcta es: ' + currentQuestion.respuestaCorrecta,
-            confirmButtonText: 'OK',
-          }).then(() => {
-            this.spinRoulette();
+            html: `La respuesta correcta es: <strong>${currentQuestion.respuestaCorrecta}</strong> ¿Quieres seguir jugando?`,
+            confirmButtonText: 'Si!',
+            showCancelButton: true, 
+            cancelButtonText: 'Salir',
+            allowOutsideClick: false
+          }).then((result) => {
+            if (result.isConfirmed) {
+              this.resetGame();
+            }
+            else if (result.dismiss === Swal.DismissReason.cancel) {
+              this.router.navigate(['/home']); 
+            }
+            
           });
         }
       }
     }
-
+    
     getAnswerOptionsForQuestion(question: any): string[] {
       const answers = [
         question.respuestaCorrecta,
@@ -480,7 +381,6 @@ selectedQuestion: any;
       }).then(async (result) => {
         if (result.isConfirmed) {
           try {
-            console.log('Route link clicked: logout');
             await this.auth.logout();
             this.router.navigate(['/login']);
           } catch (error) {

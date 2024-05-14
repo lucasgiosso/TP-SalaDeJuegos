@@ -37,8 +37,7 @@
                 </div>
                 <input type="text" spellcheck="false" placeholder="Ingrese una palabra">
                 <div class="buttons">
-                    <button class="refresh-word">Actualizar palabra</button>
-                    <button class="check-word">Verificar palabra</button>
+                    <button class="check-word" [disabled]="!gameStarted" >Verificar palabra</button>
                 </div>
                 <div class="start-button" *ngIf="!gameStarted">
                     <button class="start-game" (click)="startGame()">Comenzar Juego</button>

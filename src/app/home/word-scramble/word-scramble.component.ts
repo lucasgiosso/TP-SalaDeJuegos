@@ -40,20 +40,42 @@ export class WordScrambleComponent implements OnInit{
   isDropdownOpen = false;
   showLogoutButton = false;
   gameStarted: boolean = false;
+  failedAttempts: number = 0;
 
   words: Word[] = [
     {
-      word: "sumar",
-      hint: "El proceso de agregar numeros"
+      word: "angular",
+      hint: "Plataforma de desarrollo, construida sobre TypeScript."
     },
     {
       word: "encuentro",
-      hint: "Evento en el que se reúnen personas"
+      hint: "Evento en el que se reúnen personas."
     },
     {
       word: "numero",
-      hint: "Simbolo matematico usado para contar"
-    }
+      hint: "Simbolo matemático usado para contar."
+    },
+    {
+      word: "montaña",
+      hint: "Elevación natural del terreno de gran altura.",
+    },
+    {
+      word: "computadora",
+      hint: "Dispositivo electrónico utilizado para procesar información.",
+    },
+    {
+      word: "jirafa",
+      hint: "Animal de cuello largo y patas largas originario de África.",
+    },
+    {
+      word: "telescopio",
+      hint: "Instrumento óptico para observar objetos lejanos.",
+    },
+    {
+      word: "aventura",
+      hint: "Experiencia emocionante o arriesgada.",
+    },
+
   ];
 
   constructor(private auth: AuthService, private router: Router) 
@@ -70,7 +92,7 @@ export class WordScrambleComponent implements OnInit{
     this.checkBtn = document.querySelector(".check-word");
     this.currentUser$ = this.auth.getCurrentUser();
     this.refreshBtn?.addEventListener("click", () => {
-      //this.initGame();
+
     });
 
     document.addEventListener('click', this.onDocumentClick.bind(this));
@@ -79,13 +101,12 @@ export class WordScrambleComponent implements OnInit{
       this.checkWord();
     });
 
-    //this.initGame();
   }
 
   public onClick(event: any): void {
     this.stopTimer();
     this.router.navigate(['/home']);
-    //console.log(event);
+
   }
 
   onDocumentClick(event: MouseEvent) {
@@ -118,37 +139,75 @@ export class WordScrambleComponent implements OnInit{
     }
   }
 
-  checkWord(): void {
+  checkWord(): void 
+  {
 
-    if (!this.inputField) {
-      Swal.fire({
-        icon: 'error',
-        title: 'Uh...',
-        text: 'Por favor, ingrese la palabra para chequear!',
-      });
-      return;
+      if (!this.inputField) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Uh...',
+          text: 'Por favor, ingrese la palabra para chequear!',
+        });
+        return;
+      }
+      const userWord = this.inputField.value.toLowerCase();
+      
+      if (userWord !== this.correctWord) {
+        this.failedAttempts++;
+        const remainingAttempts = 3 - this.failedAttempts;
+        if (this.failedAttempts >= 3) {
+          this.stopTimer();
+          Swal.fire({
+            icon: 'error',
+            title: 'Lo siento...',
+            text: `Has superado el límite de intentos. La palabra correcta era ${this.correctWord.toUpperCase()}. ¿Quieres seguir jugando?`,
+            confirmButtonText: 'Si!',
+            showCancelButton: true, 
+            cancelButtonText: 'Salir',
+            allowOutsideClick: false
+            
+          }).then((result) => {
+            if (result.isConfirmed) {
+              this.failedAttempts = 0;
+              this.score++;
+              this.initGame();
+            }
+            else if (result.dismiss === Swal.DismissReason.cancel) {
+              this.router.navigate(['/home']); 
+            }
+          });
+        } else {
+
+          Swal.fire({
+            icon: 'error',
+            title: 'Mmmm... no',
+            html: `<strong>${userWord.toUpperCase()}</strong> no es la palabra correcta. Te quedan <strong>${remainingAttempts}</strong> intentos. <strong>Recorda que el tiempo sigue pasando...</strong>`,
+            position: 'top',
+          });
+          this.clearInputField();
+        }
+      }
+      else {
+        this.stopTimer();
+        Swal.fire({
+          icon: 'success',
+          title: 'Felicitaciones!',
+          html: `<strong>${this.correctWord.toUpperCase()}</strong> es la palabra correcta. ¿Quieres seguir jugando?`,
+          confirmButtonText: 'Si!',
+          showCancelButton: true, 
+          cancelButtonText: 'Salir',
+          allowOutsideClick: false
+        }).then((result) => {
+          if (result.isConfirmed) {
+            
+            this.score++;
+            this.initGame();
+          }
+          else if (result.dismiss === Swal.DismissReason.cancel) {
+            this.router.navigate(['/home']); 
+          }
+        });
     }
-    const userWord = this.inputField.value.toLowerCase();
-    
-    if (userWord !== this.correctWord) 
-    {
-      Swal.fire({
-        icon: 'error',
-        title: 'Mmmm... no',
-        text: `${userWord} no es la palabra correcta.`,
-      });
-      this.clearInputField();
-    } 
-    else {
-      Swal.fire({
-        icon: 'success',
-        title: 'Felicitaciones!',
-        text: `${this.correctWord.toUpperCase()} es la palabra correcta.`,
-      });
-      this.score++;
-      this.initGame();
-  }
-
   }
 
   refreshGame(): void {
