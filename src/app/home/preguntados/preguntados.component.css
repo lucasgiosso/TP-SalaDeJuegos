@@ -264,13 +264,14 @@ body{
     align-items: center;
     height: 100vh; 
     padding: 20px;
-    border: 1px solid #ccc;
+    /* border: 1px solid #ccc; */
     border-radius: 5px;
     background-repeat: no-repeat;
     background-size: cover;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); */
     max-height: 80%;
     color: #f3f3f3;
+    margin-top: 140px;
   }
   
   .question-container,
@@ -294,7 +295,8 @@ body{
   .question-container, .answer-container, .timer-container, .answers-container, .user-answer-container, .score-container, .load-question-button {
     text-align: center;
   }
-  
+
+
   .answers-container ul {
     list-style: none;
     padding: 0;
